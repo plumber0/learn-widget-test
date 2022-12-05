@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/src/common_widgets/alert_dialogs.dart';
 import 'package:ecommerce_app/src/features/authentication/presentation/account/account_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,5 +37,24 @@ class AuthRobot {
   void expectLogoutDialogNotFound() {
     final dialogTitle = find.text('Are you sure?');
     expect(dialogTitle, findsNothing);
+  }
+
+  /// Sometimes it's hard to find exactly the widget that we want
+  /// (our finder may return more than one match)
+  /// We can identify a widget by passing a unique Key
+  ///
+  /// Tip: define the key with a const variable that we can pass to our widget
+  /// and reference it in our test using find.byKey()
+  ///
+  /// Most common finders:
+  /// - find.text('abc')
+  /// - find.byKey(someKey)
+  /// - find.byType(ElevatedButton)
+
+  Future<void> tapDialogLogoutButton() async {
+    final logoutButton = find.byKey(kDialogDefaultKey);
+    expect(logoutButton, findsOneWidget);
+    await tester.tap(logoutButton);
+    await tester.pump();
   }
 }
